@@ -17,18 +17,49 @@ const numbers = alert("Numeri: "+ arrayNumbers);
 let arrayPlayer = [];
 
 // inserisco un timer che dopo 30 secondi si attiva una funzione per inserire dei numeri
-setTimeout (function (){
+let seconds = 3;
 
-  // chiedo cinque volte i numeri all'utente
-  for(let i = 0; i < 5; i++){
-    let numberPlayer = parseInt(prompt("Inserisci i numeri visti precedentemente"));
-    arrayPlayer.push(numberPlayer);
-    }    
-},3000);
+let time = setInterval(function(){
+    countdown("seconds",seconds);
+
+    if(seconds == 0){
+        clearInterval(time);
+        // chiedo cinque volte i numeri all'utente
+        for(let i = 0; i < arrayNumbers.length; i++){
+            let numberPlayer = parseInt(prompt("Inserisci i numeri visti precedentemente"));
+            if((numberPlayer!=NaN)||(numberPlayer.length>0)){
+                arrayPlayer.push(numberPlayer);
+            }else{
+                numberPlayer = parseInt(prompt("Non è un numero reiseriscilo correttamente "));
+            }   
+        }
+    }else{
+        seconds--;
+    }
+    
+}, 1000);
+
+    
+if(arrayPlayer.length == arrayNumbers.length){
+    // creo un array dove inserire i numeri indovinati
+    let numbersGuessed = [];
+
+    // controllo se negli array dei numeri casuali e i numeri scelti dall'utente combacino in tal caso inserirli nell'array dei numeri indovinati
+    for(let i = 0; i < arrayNumbers.length; i++){
+        if(arrayNumbers[i] === arrayPlayer[i]){
+        numbersGuessed.push(arrayPlayer[i]);
+        }
+    }
+
+    let num = alert("Quanti numeri hai indovinato: "+ numbersGuessed.length +"  I numeri sono: "+ numbersGuessed);
+
+}
 
 
 
-
+function countdown(id , aggiornamento){
+    document.getElementById(id).innerHTML = aggiornamento;
+}
 
 console.log(arrayNumbers);
 console.log(arrayPlayer);
