@@ -4,12 +4,18 @@ function getNumberInt(min , max){
     return numberRandomic;
 }
 
+
 // array per inserire i cinque numeri casuali
 let arrayNumbers = [];
 
-// genero cinque numeri casuali
-for (let i = 0; i < 5; i++){
-    arrayNumbers.push(getNumberInt(1,100));
+// genero cinque numeri casuali da 1 a 100 e controllo che non ci siano doppioni
+let i = 0;
+while (arrayNumbers.length < 5){
+    let numbersRandomic = getNumberInt(1,100);
+    if(!arrayNumbers.includes(numbersRandomic)){
+        arrayNumbers.push(numbersRandomic);
+    }
+    i++;
 }
 const numbers = alert("Numeri: "+ arrayNumbers);
 
@@ -30,15 +36,16 @@ let time = setInterval(function(){
         while(arrayPlayer.length < arrayNumbers.length){
             let numberPlayer = parseInt(prompt("Inserisci i numeri visti precedentemente da 1 a 100"));
             
-            if((numberPlayer > 1)&&( numberPlayer < 100)){
+            if((numberPlayer > 1)&&( numberPlayer < 100)&&(!arrayPlayer.includes(numberPlayer))){
                 arrayPlayer.push(numberPlayer);
                 console.log(numberPlayer);
-            }else{
-                numberPlayer = parseInt(prompt("Non è un numero reiseriscilo correttamente"));
+            }else {
+                numberPlayer = parseInt(prompt("Non è un numero oppure hai reinserito lo stesso numero ritenta"));
             } 
             index++; 
         }
 
+        // se la lunghezza dell'array del pc è uguale a quella del giocatore.....
         if(arrayPlayer.length == arrayNumbers.length){
             // creo un array dove inserire i numeri indovinati
             let numbersGuessed = [];
