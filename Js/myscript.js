@@ -1,6 +1,6 @@
 // funzione per creare randomicamente un numero da min a max
 function getNumberInt(min , max){
-    let numberRandomic = Math.floor(Math.random() * (max - min + 1) - min);
+    let numberRandomic = Math.floor(Math.random() * (max - min + 1) + min);
     return numberRandomic;
 }
 
@@ -17,43 +17,48 @@ const numbers = alert("Numeri: "+ arrayNumbers);
 let arrayPlayer = [];
 
 // inserisco un timer che dopo 30 secondi si attiva una funzione per inserire dei numeri
-let seconds = 3;
+let seconds = 5;
 
 let time = setInterval(function(){
     countdown("seconds",seconds);
 
     if(seconds == 0){
         clearInterval(time);
+
+        let index = 0;
         // chiedo cinque volte i numeri all'utente
-        for(let i = 0; i < arrayNumbers.length; i++){
-            let numberPlayer = parseInt(prompt("Inserisci i numeri visti precedentemente"));
-            if((numberPlayer!=NaN)||(numberPlayer.length>0)){
+        while(arrayPlayer.length < arrayNumbers.length){
+            let numberPlayer = parseInt(prompt("Inserisci i numeri visti precedentemente da 1 a 100"));
+            
+            if((numberPlayer > 1)&&( numberPlayer < 100)){
                 arrayPlayer.push(numberPlayer);
+                console.log(numberPlayer);
             }else{
-                numberPlayer = parseInt(prompt("Non è un numero reiseriscilo correttamente "));
-            }   
+                numberPlayer = parseInt(prompt("Non è un numero reiseriscilo correttamente"));
+            } 
+            index++; 
         }
-    }else{
+
+        if(arrayPlayer.length == arrayNumbers.length){
+            // creo un array dove inserire i numeri indovinati
+            let numbersGuessed = [];
+
+            // controllo se negli array dei numeri casuali e i numeri scelti dall'utente combacino in tal caso inserirli nell'array dei numeri indovinati
+            for(let i = 0; i < arrayNumbers.length; i++){
+                if(arrayNumbers[i] === arrayPlayer[i]){
+                numbersGuessed.push(arrayPlayer[i]);
+                }
+            }
+
+            alert("Quanti numeri hai indovinato: "+ numbersGuessed.length +"  I numeri sono: "+ numbersGuessed);
+
+        }  
+    }
+    else {
         seconds--;
     }
-    
+
 }, 1000);
-
-    
-if(arrayPlayer.length == arrayNumbers.length){
-    // creo un array dove inserire i numeri indovinati
-    let numbersGuessed = [];
-
-    // controllo se negli array dei numeri casuali e i numeri scelti dall'utente combacino in tal caso inserirli nell'array dei numeri indovinati
-    for(let i = 0; i < arrayNumbers.length; i++){
-        if(arrayNumbers[i] === arrayPlayer[i]){
-        numbersGuessed.push(arrayPlayer[i]);
-        }
-    }
-
-    let num = alert("Quanti numeri hai indovinato: "+ numbersGuessed.length +"  I numeri sono: "+ numbersGuessed);
-
-}
 
 
 
